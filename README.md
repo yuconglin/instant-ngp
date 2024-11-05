@@ -185,7 +185,6 @@ export PATH="/usr/local/cuda-11.4/bin:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$LD_LIBRARY_PATH"
 ```
 
-
 ### Compilation
 
 Begin by cloning this repository and all its submodules using the following command:
@@ -194,9 +193,9 @@ $ git clone --recursive https://github.com/nvlabs/instant-ngp
 $ cd instant-ngp
 ```
 
-Then, use CMake to build the project: (on Windows, this must be in a [developer command prompt](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-160#developer_command_prompt))
+Then, use CMake to build the project with my old GPU: (on Windows, this must be in a [developer command prompt](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-160#developer_command_prompt))
 ```sh
-instant-ngp$ cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
+instant-ngp$ cmake . -D CMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc -D TCNN_CUDA_ARCHITECTURES=52 -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
 instant-ngp$ cmake --build build --config RelWithDebInfo -j
 ```
 
@@ -222,6 +221,12 @@ If you would rather build new models from the hash encoding and fast neural netw
 
 Happy hacking!
 
+## Run python in a virtual environment
+```
+python3 -m venv ./venv
+. ./venv/bin/activate
+python scripts/colmap2nerf.py --run_colmap --colmap_camera_model SIMPLE_PINHOLE --images /home/yuconglin/Documents/nerf_data/gannet/images_only --out /home/yuconglin/Documents/nerf_data/gannet/transforms.json --colmap_matcher exhaustive
+```
 
 ## Additional resources
 
